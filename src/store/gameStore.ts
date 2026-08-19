@@ -256,3 +256,6 @@ export const useGameStore = create<GameState>((set, get) => ({
 
 export const selectFinalTime = (s: GameState) => s.elapsedSeconds + s.penaltySeconds;
 export const TOTAL_LEVELS = GAME_CONFIG.totalLevels;
+if (typeof window !== "undefined") {
+  (window as unknown as Record<string, unknown>).__gameStore = useGameStore;
+}
