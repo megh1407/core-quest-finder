@@ -36,6 +36,10 @@ export function GameScreen() {
   }, [tick]);
 
   useEffect(() => {
+    if (!useGameStore.getState().startedAt) void useGameStore.getState().startGame();
+  }, []);
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "Escape") {
         if (useGameStore.getState().panel) resume();

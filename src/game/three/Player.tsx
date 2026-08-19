@@ -35,8 +35,9 @@ const keyMap: Record<string, string> = {
 export function Player({ spawn, bounds, blockers = [], onMove, enabled }: PlayerProps) {
   const group = useRef<THREE.Group>(null);
   const keys = useRef<Record<string, boolean>>({});
-  const yaw = useRef(Math.PI);
-  const pitch = useRef(-0.12);
+  // yaw 0 looks toward -Z, i.e. from the main gate into the campus.
+  const yaw = useRef(0);
+  const pitch = useRef(-0.05);
   const { camera, gl } = useThree();
   const cameraMode = useGameStore((s) => s.cameraMode);
   const setPlayerPosition = useGameStore((s) => s.setPlayerPosition);
@@ -156,6 +157,9 @@ export function Player({ spawn, bounds, blockers = [], onMove, enabled }: Player
         g.position.z + Math.cos(yaw.current) * dist,
       );
       camera.position.lerp(desired, 1 - Math.pow(0.001, delta));
+      // keep the follow camera inside the playable volume (interiors have walls)
+      camera.position.x = THREE.MathUtils.clamp(camera.position.x, bounds.minX + 0.4, bounds.maxX - 0.4);
+      camera.position.z = THREE.MathUtils.clamp(camera.position.z, bounds.minZ + 0.4, bounds.maxZ - 0.4);
       camera.lookAt(g.position.x, 1.3, g.position.z);
     }
 

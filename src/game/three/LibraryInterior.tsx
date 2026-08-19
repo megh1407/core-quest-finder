@@ -2,7 +2,7 @@ import { getLevel } from "../data/levels";
 import { ObjectMesh } from "./LibraryObjects";
 
 export const LIBRARY_BOUNDS = { minX: -8.4, maxX: 8.4, minZ: -8.4, maxZ: 8.4 };
-export const LIBRARY_SPAWN: [number, number, number] = [0, 0, 7];
+export const LIBRARY_SPAWN: [number, number, number] = [0, 0, 4.5];
 export const LIBRARY_EXIT: [number, number, number] = [0, 0, 8.2];
 
 /** Interior scene for the Library reading hall (Level 1). */
@@ -69,7 +69,7 @@ export function LibraryInterior({ highlightedId }: { highlightedId: string | nul
         <ObjectMesh key={o.id} object={o} highlighted={highlightedId === o.id} />
       ))}
 
-      <ambientLight intensity={0.45} />
+      <ambientLight intensity={0.7} />
       <pointLight position={[0, 3.6, 0]} intensity={26} distance={22} color="#ffe0b8" castShadow />
       <pointLight position={[-5, 3, -4]} intensity={12} distance={14} color="#8fd6e6" />
     </group>

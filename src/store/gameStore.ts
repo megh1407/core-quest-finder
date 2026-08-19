@@ -116,8 +116,15 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   startGame: async () => {
-    const player = get().player;
-    if (!player) return;
+    let player = get().player;
+    if (!player) {
+      player = await api.registerPlayer({
+        playerName: "Guest Operative",
+        enrollmentNumber: "GUEST",
+        team: "Solo Operative",
+      });
+      set({ player });
+    }
     const { startTime } = await api.startSession(player.id);
     set({ startedAt: startTime, status: "searching", scene: "campus", elapsedSeconds: 0 });
     log(get(), "player_started", "started the hunt at the Main Gate");

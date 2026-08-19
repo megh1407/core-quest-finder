@@ -27,7 +27,7 @@ export const CAMPUS: Building[] = [
     size: [16, 9, 14],
     color: "#6b5a48",
     enterable: true,
-    door: [0, -7],
+    door: [-8, 0],
   },
   {
     id: "computer_lab",
@@ -104,7 +104,7 @@ export const CAMPUS: Building[] = [
 ];
 
 export const CAMPUS_BOUNDS = { minX: -42, maxX: 42, minZ: -58, maxZ: 52 };
-export const SPAWN_POSITION: [number, number, number] = [0, 0, 42];
+export const SPAWN_POSITION: [number, number, number] = [0, 0, 38];
 
 export function getBuilding(id: string): Building | undefined {
   return CAMPUS.find((b) => b.id === id);
