@@ -10,11 +10,11 @@ export function HoloPanel({
   onClose,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   children: ReactNode;
-  footer?: ReactNode;
-  className?: string;
-  onClose?: () => void;
+  footer?: ReactNode | undefined;
+  className?: string | undefined;
+  onClose?: (() => void) | undefined;
 }) {
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-background/70 p-4 backdrop-blur-sm">
