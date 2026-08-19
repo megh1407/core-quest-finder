@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { Environment, Preload } from "@react-three/drei";
+import { Preload } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { CampusScene } from "./CampusScene";
@@ -41,10 +41,12 @@ export function GameWorld({ onNearby }: { onNearby: (t: ProximityTarget | null) 
     }
     return CAMPUS.filter((b) => b.enterable).map((b) => {
       const [x, z] = doorPosition(b);
+      const ox = b.door[0] !== 0 ? Math.sign(b.door[0]) * 1.2 : 0;
+      const oz = b.door[1] !== 0 ? Math.sign(b.door[1]) * 1.2 : 0;
       return {
         id: `__enter_${b.id}`,
         label: `Enter ${b.name}`,
-        position: [x, 0, z + 0.6] as [number, number, number],
+        position: [x + ox, 0, z + oz] as [number, number, number],
         radius: 3.2,
         action: "Enter",
       };
@@ -78,20 +80,20 @@ export function GameWorld({ onNearby }: { onNearby: (t: ProximityTarget | null) 
       gl={{ antialias: true, powerPreference: "high-performance" }}
     >
       <color attach="background" args={[inLibrary ? "#0d1116" : "#0b1119"]} />
-      <fog attach="fog" args={[inLibrary ? "#0d1116" : "#0b1119", 26, inLibrary ? 40 : 130]} />
+      <fog attach="fog" args={inLibrary ? ["#0d1116", 12, 44] : ["#0b1119", 90, 260]} />
 
       {inLibrary ? (
         <LibraryInterior highlightedId={highlightedId} />
       ) : (
         <>
-          <hemisphereLight intensity={0.5} groundColor="#1b2530" color="#8fb7cc" />
+          <ambientLight intensity={0.55} color="#9fc6dd" />
+          <hemisphereLight intensity={0.7} groundColor="#1b2530" color="#8fb7cc" />
           <directionalLight
             position={[28, 40, 20]}
             intensity={1.1}
             castShadow
             shadow-mapSize={[1024, 1024]}
           />
-          <Environment preset="night" />
           <CampusScene />
         </>
       )}

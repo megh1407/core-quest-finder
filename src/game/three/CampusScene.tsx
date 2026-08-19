@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { Html } from "@react-three/drei";
 import { CAMPUS } from "../data/campus";
 
@@ -46,10 +47,17 @@ export function CampusScene() {
                     emissiveIntensity={0.7}
                   />
                 </mesh>
-                {/* door */}
-                <mesh position={[b.door[0], 1.2, b.door[1] + (b.door[1] > 0 ? 0.03 : -0.03)]}>
+                {/* door — oriented to whichever facade it sits on */}
+                <mesh
+                  position={[
+                    b.door[0] + (b.door[0] !== 0 ? Math.sign(b.door[0]) * 0.03 : 0),
+                    1.2,
+                    b.door[1] + (b.door[1] !== 0 ? Math.sign(b.door[1]) * 0.03 : 0),
+                  ]}
+                  rotation={[0, b.door[0] !== 0 ? Math.sign(b.door[0]) * (Math.PI / 2) : 0, 0]}
+                >
                   <planeGeometry args={[2.2, 2.4]} />
-                  <meshStandardMaterial color="#14202b" emissive="#0e2b33" />
+                  <meshStandardMaterial color="#14202b" emissive="#0e2b33" side={THREE.DoubleSide} />
                 </mesh>
               </>
             )}

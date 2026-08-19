@@ -35,8 +35,9 @@ const keyMap: Record<string, string> = {
 export function Player({ spawn, bounds, blockers = [], onMove, enabled }: PlayerProps) {
   const group = useRef<THREE.Group>(null);
   const keys = useRef<Record<string, boolean>>({});
-  const yaw = useRef(Math.PI);
-  const pitch = useRef(-0.12);
+  // yaw 0 looks toward -Z, i.e. from the main gate into the campus.
+  const yaw = useRef(0);
+  const pitch = useRef(-0.05);
   const { camera, gl } = useThree();
   const cameraMode = useGameStore((s) => s.cameraMode);
   const setPlayerPosition = useGameStore((s) => s.setPlayerPosition);
